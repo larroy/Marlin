@@ -2540,49 +2540,49 @@
 
   #if AXIS_DRIVER_TYPE_X(TMC26X)
     #define X_MAX_CURRENT     1000  // (mA)
-    #define X_SENSE_RESISTOR    91  // (mOhms)
+    #define X_SENSE_RESISTOR    110  // (mOhms)
     #define X_MICROSTEPS        16  // Number of microsteps
   #endif
 
   #if AXIS_DRIVER_TYPE_X2(TMC26X)
     #define X2_MAX_CURRENT    1000
-    #define X2_SENSE_RESISTOR   91
+    #define X2_SENSE_RESISTOR   110
     #define X2_MICROSTEPS       X_MICROSTEPS
   #endif
 
   #if AXIS_DRIVER_TYPE_Y(TMC26X)
     #define Y_MAX_CURRENT     1000
-    #define Y_SENSE_RESISTOR    91
+    #define Y_SENSE_RESISTOR    110
     #define Y_MICROSTEPS        16
   #endif
 
   #if AXIS_DRIVER_TYPE_Y2(TMC26X)
     #define Y2_MAX_CURRENT    1000
-    #define Y2_SENSE_RESISTOR   91
+    #define Y2_SENSE_RESISTOR   110
     #define Y2_MICROSTEPS       Y_MICROSTEPS
   #endif
 
   #if AXIS_DRIVER_TYPE_Z(TMC26X)
     #define Z_MAX_CURRENT     1000
-    #define Z_SENSE_RESISTOR    91
+    #define Z_SENSE_RESISTOR    110
     #define Z_MICROSTEPS        16
   #endif
 
   #if AXIS_DRIVER_TYPE_Z2(TMC26X)
     #define Z2_MAX_CURRENT    1000
-    #define Z2_SENSE_RESISTOR   91
+    #define Z2_SENSE_RESISTOR   110
     #define Z2_MICROSTEPS       Z_MICROSTEPS
   #endif
 
   #if AXIS_DRIVER_TYPE_Z3(TMC26X)
     #define Z3_MAX_CURRENT    1000
-    #define Z3_SENSE_RESISTOR   91
+    #define Z3_SENSE_RESISTOR   110
     #define Z3_MICROSTEPS       Z_MICROSTEPS
   #endif
 
   #if AXIS_DRIVER_TYPE_Z4(TMC26X)
     #define Z4_MAX_CURRENT    1000
-    #define Z4_SENSE_RESISTOR   91
+    #define Z4_SENSE_RESISTOR   110
     #define Z4_MICROSTEPS       Z_MICROSTEPS
   #endif
 
@@ -2606,49 +2606,49 @@
 
   #if AXIS_DRIVER_TYPE_E0(TMC26X)
     #define E0_MAX_CURRENT    1000
-    #define E0_SENSE_RESISTOR   91
+    #define E0_SENSE_RESISTOR   110
     #define E0_MICROSTEPS       16
   #endif
 
   #if AXIS_DRIVER_TYPE_E1(TMC26X)
     #define E1_MAX_CURRENT    1000
-    #define E1_SENSE_RESISTOR   91
+    #define E1_SENSE_RESISTOR   110
     #define E1_MICROSTEPS       E0_MICROSTEPS
   #endif
 
   #if AXIS_DRIVER_TYPE_E2(TMC26X)
     #define E2_MAX_CURRENT    1000
-    #define E2_SENSE_RESISTOR   91
+    #define E2_SENSE_RESISTOR   110
     #define E2_MICROSTEPS       E0_MICROSTEPS
   #endif
 
   #if AXIS_DRIVER_TYPE_E3(TMC26X)
     #define E3_MAX_CURRENT    1000
-    #define E3_SENSE_RESISTOR   91
+    #define E3_SENSE_RESISTOR   110
     #define E3_MICROSTEPS       E0_MICROSTEPS
   #endif
 
   #if AXIS_DRIVER_TYPE_E4(TMC26X)
     #define E4_MAX_CURRENT    1000
-    #define E4_SENSE_RESISTOR   91
+    #define E4_SENSE_RESISTOR   110
     #define E4_MICROSTEPS       E0_MICROSTEPS
   #endif
 
   #if AXIS_DRIVER_TYPE_E5(TMC26X)
     #define E5_MAX_CURRENT    1000
-    #define E5_SENSE_RESISTOR   91
+    #define E5_SENSE_RESISTOR   110
     #define E5_MICROSTEPS       E0_MICROSTEPS
   #endif
 
   #if AXIS_DRIVER_TYPE_E6(TMC26X)
     #define E6_MAX_CURRENT    1000
-    #define E6_SENSE_RESISTOR   91
+    #define E6_SENSE_RESISTOR   110
     #define E6_MICROSTEPS       E0_MICROSTEPS
   #endif
 
   #if AXIS_DRIVER_TYPE_E7(TMC26X)
     #define E7_MAX_CURRENT    1000
-    #define E7_SENSE_RESISTOR   91
+    #define E7_SENSE_RESISTOR   110
     #define E7_MICROSTEPS       E0_MICROSTEPS
   #endif
 
