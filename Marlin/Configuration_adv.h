@@ -606,7 +606,7 @@
  * Multiple extruders can be assigned to the same pin in which case
  * the fan will turn on when any selected extruder is above the threshold.
  */
-#define E0_AUTO_FAN_PIN -1
+#define E0_AUTO_FAN_PIN FAN1_PIN
 #define E1_AUTO_FAN_PIN -1
 #define E2_AUTO_FAN_PIN -1
 #define E3_AUTO_FAN_PIN -1
@@ -727,7 +727,7 @@
 
 //#define X_DUAL_STEPPER_DRIVERS
 #if ENABLED(X_DUAL_STEPPER_DRIVERS)
-  //#define INVERT_X2_VS_X_DIR    // Enable if X2 direction signal is opposite to X
+  #define INVERT_X2_VS_X_DIR true   // Set 'true' if X motors should rotate in opposite directions
   //#define X_DUAL_ENDSTOPS
   #if ENABLED(X_DUAL_ENDSTOPS)
     #define X2_USE_ENDSTOP _XMAX_
@@ -737,7 +737,7 @@
 
 //#define Y_DUAL_STEPPER_DRIVERS
 #if ENABLED(Y_DUAL_STEPPER_DRIVERS)
-  //#define INVERT_Y2_VS_Y_DIR   // Enable if Y2 direction signal is opposite to Y
+  #define INVERT_Y2_VS_Y_DIR true   // Set 'true' if Y motors should rotate in opposite directions
   //#define Y_DUAL_ENDSTOPS
   #if ENABLED(Y_DUAL_ENDSTOPS)
     #define Y2_USE_ENDSTOP _YMAX_
@@ -989,8 +989,8 @@
 //#define ASSISTED_TRAMMING
 #if ENABLED(ASSISTED_TRAMMING)
 
-  // Define positions for probe points.
-  #define TRAMMING_POINT_XY { {  20, 20 }, { 180,  20 }, { 180, 180 }, { 20, 180 } }
+  // Define positions for probing points, use the hotend as reference not the sensor.
+  #define TRAMMING_POINT_XY { {  20, 20 }, { 200,  20 }, { 200, 200 }, { 20, 200 } }
 
   // Define position names for probe points.
   #define TRAMMING_POINT_NAME_1 "Front-Left"
@@ -1510,9 +1510,9 @@
     #define SDSORT_LIMIT       40     // Maximum number of sorted items (10-256). Costs 27 bytes each.
     #define FOLDER_SORTING     -1     // -1=above  0=none  1=below
     #define SDSORT_GCODE       false  // Allow turning sorting on/off with LCD and M34 G-code.
-    #define SDSORT_USES_RAM    false  // Pre-allocate a static array for faster pre-sorting.
+    #define SDSORT_USES_RAM    true  // Pre-allocate a static array for faster pre-sorting.
     #define SDSORT_USES_STACK  false  // Prefer the stack for pre-sorting to give back some SRAM. (Negated by next 2 options.)
-    #define SDSORT_CACHE_NAMES false  // Keep sorted items in RAM longer for speedy performance. Most expensive option.
+    #define SDSORT_CACHE_NAMES true  // Keep sorted items in RAM longer for speedy performance. Most expensive option.
     #define SDSORT_DYNAMIC_RAM false  // Use dynamic allocation (within SD menus). Least expensive option. Set SDSORT_LIMIT before use!
     #define SDSORT_CACHE_VFATS 2      // Maximum number of 13-byte VFAT entries to use for sorting.
                                       // Note: Only affects SCROLL_LONG_FILENAMES with SDSORT_CACHE_NAMES but not SDSORT_DYNAMIC_RAM.
@@ -1522,10 +1522,11 @@
   // LCD's font must contain the characters. Check your selected LCD language.
   //#define UTF_FILENAME_SUPPORT
 
-  //#define LONG_FILENAME_HOST_SUPPORT    // Get the long filename of a file/folder with 'M33 <dosname>' and list long filenames with 'M20 L'
-  //#define LONG_FILENAME_WRITE_SUPPORT   // Create / delete files with long filenames via M28, M30, and Binary Transfer Protocol
+  #define LONG_FILENAME_HOST_SUPPORT    // Get the long filename of a file/folder with 'M33 <dosname>' and list long filenames with 'M20 L'
+  #define LONG_FILENAME_WRITE_SUPPORT   // Create / delete files with long filenames via M28, M30, and Binary Transfer Protocol
 
   //#define SCROLL_LONG_FILENAMES         // Scroll long filenames in the SD card menu
+  #define SCROLL_LONG_FILENAMES
 
   //#define SD_ABORT_NO_COOLDOWN          // Leave the heaters on after Stop Print (not recommended!)
 
@@ -1556,6 +1557,9 @@
    */
   //#define USB_FLASH_DRIVE_SUPPORT
   #if ENABLED(USB_FLASH_DRIVE_SUPPORT)
+    #define USB_CS_PIN    SDSS
+    #define USB_INTR_PIN  SD_DETECT_PIN
+
     /**
      * USB Host Shield Library
      *
@@ -1621,7 +1625,7 @@
    *
    * :[ 'LCD', 'ONBOARD', 'CUSTOM_CABLE' ]
    */
-  //#define SDCARD_CONNECTION LCD
+  #define SDCARD_CONNECTION ONBOARD
 
   // Enable if SD detect is rendered useless (e.g., by using an SD extender)
   //#define NO_SD_DETECT
@@ -1984,12 +1988,12 @@
  *
  * See https://marlinfw.org/docs/features/lin_advance.html for full instructions.
  */
-//#define LIN_ADVANCE
+#define LIN_ADVANCE
 #if ENABLED(LIN_ADVANCE)
   //#define EXTRA_LIN_ADVANCE_K // Enable for second linear advance constants
-  #define LIN_ADVANCE_K 0.22    // Unit: mm compression per 1mm/s extruder speed
+  #define LIN_ADVANCE_K 0.0    // Unit: mm compression per 1mm/s extruder speed
   //#define LA_DEBUG            // If enabled, this will generate debug information output over USB.
-  //#define EXPERIMENTAL_SCURVE // Enable this option to permit S-Curve Acceleration
+  #define EXPERIMENTAL_SCURVE   // Enable this option to permit S-Curve Acceleration
   //#define ALLOW_LOW_EJERK     // Allow a DEFAULT_EJERK value of <10. Recommended for direct drive hotends.
 #endif
 
@@ -2299,7 +2303,7 @@
  * Currently handles M108, M112, M410, M876
  * NOTE: Not yet implemented for all platforms.
  */
-//#define EMERGENCY_PARSER
+#define EMERGENCY_PARSER
 
 /**
  * Realtime Reporting (requires EMERGENCY_PARSER)
@@ -2477,14 +2481,14 @@
  *
  * Enable PARK_HEAD_ON_PAUSE to add the G-code M125 Pause and Park.
  */
-//#define ADVANCED_PAUSE_FEATURE
+#define ADVANCED_PAUSE_FEATURE
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
   #define PAUSE_PARK_RETRACT_FEEDRATE         60  // (mm/s) Initial retract feedrate.
   #define PAUSE_PARK_RETRACT_LENGTH            2  // (mm) Initial retract.
                                                   // This short retract is done immediately, before parking the nozzle.
   #define FILAMENT_CHANGE_UNLOAD_FEEDRATE     10  // (mm/s) Unload filament feedrate. This can be pretty fast.
   #define FILAMENT_CHANGE_UNLOAD_ACCEL        25  // (mm/s^2) Lower acceleration may allow a faster feedrate.
-  #define FILAMENT_CHANGE_UNLOAD_LENGTH      100  // (mm) The length of filament for a complete unload.
+  #define FILAMENT_CHANGE_UNLOAD_LENGTH      400  // (mm) The length of filament for a complete unload.
                                                   //   For Bowden, the full length of the tube and nozzle.
                                                   //   For direct drive, the full length of the nozzle.
                                                   //   Set to 0 for manual unloading.
@@ -2493,7 +2497,7 @@
                                                   // 0 to disable start loading and skip to fast load only
   #define FILAMENT_CHANGE_FAST_LOAD_FEEDRATE   6  // (mm/s) Load filament feedrate. This can be pretty fast.
   #define FILAMENT_CHANGE_FAST_LOAD_ACCEL     25  // (mm/s^2) Lower acceleration may allow a faster feedrate.
-  #define FILAMENT_CHANGE_FAST_LOAD_LENGTH     0  // (mm) Load length of filament, from extruder gear to nozzle.
+  #define FILAMENT_CHANGE_FAST_LOAD_LENGTH   350  // (mm) Load length of filament, from extruder gear to nozzle.
                                                   //   For Bowden, the full length of the tube and nozzle.
                                                   //   For direct drive, the full length of the nozzle.
   //#define ADVANCED_PAUSE_CONTINUOUS_PURGE       // Purge continuously up to the purge length until interrupted.
@@ -2517,10 +2521,10 @@
   //#define FILAMENT_CHANGE_RESUME_ON_INSERT      // Automatically continue / load filament when runout sensor is triggered again.
   //#define PAUSE_REHEAT_FAST_RESUME              // Reduce number of waits by not prompting again post-timeout before continuing.
 
-  //#define PARK_HEAD_ON_PAUSE                    // Park the nozzle during pause and filament change.
-  //#define HOME_BEFORE_FILAMENT_CHANGE           // If needed, home before parking for filament change
+  #define PARK_HEAD_ON_PAUSE                    // Park the nozzle during pause and filament change.
+  #define HOME_BEFORE_FILAMENT_CHANGE           // If needed, home before parking for filament change
 
-  //#define FILAMENT_LOAD_UNLOAD_GCODES           // Add M701/M702 Load/Unload G-codes, plus Load/Unload in the LCD Prepare menu.
+  #define FILAMENT_LOAD_UNLOAD_GCODES           // Add M701/M702 Load/Unload G-codes, plus Load/Unload in the LCD Prepare menu.
   //#define FILAMENT_UNLOAD_ALL_EXTRUDERS         // Allow M702 to unload all extruders above a minimum target temp (as set by M302)
 #endif
 
@@ -2679,7 +2683,7 @@
   #define INTERPOLATE      true
 
   #if AXIS_IS_TMC(X)
-    #define X_CURRENT       800        // (mA) RMS current. Multiply by 1.414 for peak current.
+    #define X_CURRENT       580        // (mA) RMS current. Multiply by 1.414 for peak current.
     #define X_CURRENT_HOME  X_CURRENT  // (mA) RMS current for sensorless homing
     #define X_MICROSTEPS     16        // 0..256
     #define X_RSENSE          0.11
@@ -2689,7 +2693,7 @@
   #endif
 
   #if AXIS_IS_TMC(X2)
-    #define X2_CURRENT      800
+    #define X2_CURRENT      580
     #define X2_CURRENT_HOME X2_CURRENT
     #define X2_MICROSTEPS    X_MICROSTEPS
     #define X2_RSENSE         0.11
@@ -2699,7 +2703,7 @@
   #endif
 
   #if AXIS_IS_TMC(Y)
-    #define Y_CURRENT       800
+    #define Y_CURRENT       580
     #define Y_CURRENT_HOME  Y_CURRENT
     #define Y_MICROSTEPS     16
     #define Y_RSENSE          0.11
@@ -2709,7 +2713,7 @@
   #endif
 
   #if AXIS_IS_TMC(Y2)
-    #define Y2_CURRENT      800
+    #define Y2_CURRENT      580
     #define Y2_CURRENT_HOME Y2_CURRENT
     #define Y2_MICROSTEPS    Y_MICROSTEPS
     #define Y2_RSENSE         0.11
@@ -2719,7 +2723,7 @@
   #endif
 
   #if AXIS_IS_TMC(Z)
-    #define Z_CURRENT       800
+    #define Z_CURRENT       580
     #define Z_CURRENT_HOME  Z_CURRENT
     #define Z_MICROSTEPS     16
     #define Z_RSENSE          0.11
@@ -2729,7 +2733,7 @@
   #endif
 
   #if AXIS_IS_TMC(Z2)
-    #define Z2_CURRENT      800
+    #define Z2_CURRENT      580
     #define Z2_CURRENT_HOME Z2_CURRENT
     #define Z2_MICROSTEPS    Z_MICROSTEPS
     #define Z2_RSENSE         0.11
@@ -2739,7 +2743,7 @@
   #endif
 
   #if AXIS_IS_TMC(Z3)
-    #define Z3_CURRENT      800
+    #define Z3_CURRENT      580
     #define Z3_CURRENT_HOME Z3_CURRENT
     #define Z3_MICROSTEPS    Z_MICROSTEPS
     #define Z3_RSENSE         0.11
@@ -2749,7 +2753,7 @@
   #endif
 
   #if AXIS_IS_TMC(Z4)
-    #define Z4_CURRENT      800
+    #define Z4_CURRENT      580
     #define Z4_CURRENT_HOME Z4_CURRENT
     #define Z4_MICROSTEPS    Z_MICROSTEPS
     #define Z4_RSENSE         0.11
@@ -2789,7 +2793,7 @@
   #endif
 
   #if AXIS_IS_TMC(E0)
-    #define E0_CURRENT      800
+    #define E0_CURRENT      640
     #define E0_MICROSTEPS    16
     #define E0_RSENSE         0.11
     #define E0_CHAIN_POS     -1
@@ -2798,7 +2802,7 @@
   #endif
 
   #if AXIS_IS_TMC(E1)
-    #define E1_CURRENT      800
+    #define E1_CURRENT      640
     #define E1_MICROSTEPS   E0_MICROSTEPS
     #define E1_RSENSE         0.11
     #define E1_CHAIN_POS     -1
@@ -2807,7 +2811,7 @@
   #endif
 
   #if AXIS_IS_TMC(E2)
-    #define E2_CURRENT      800
+    #define E2_CURRENT      640
     #define E2_MICROSTEPS   E0_MICROSTEPS
     #define E2_RSENSE         0.11
     #define E2_CHAIN_POS     -1
@@ -2816,7 +2820,7 @@
   #endif
 
   #if AXIS_IS_TMC(E3)
-    #define E3_CURRENT      800
+    #define E3_CURRENT      640
     #define E3_MICROSTEPS   E0_MICROSTEPS
     #define E3_RSENSE         0.11
     #define E3_CHAIN_POS     -1
@@ -2825,7 +2829,7 @@
   #endif
 
   #if AXIS_IS_TMC(E4)
-    #define E4_CURRENT      800
+    #define E4_CURRENT      640
     #define E4_MICROSTEPS   E0_MICROSTEPS
     #define E4_RSENSE         0.11
     #define E4_CHAIN_POS     -1
@@ -2834,7 +2838,7 @@
   #endif
 
   #if AXIS_IS_TMC(E5)
-    #define E5_CURRENT      800
+    #define E5_CURRENT      640
     #define E5_MICROSTEPS   E0_MICROSTEPS
     #define E5_RSENSE         0.11
     #define E5_CHAIN_POS     -1
@@ -2843,7 +2847,7 @@
   #endif
 
   #if AXIS_IS_TMC(E6)
-    #define E6_CURRENT      800
+    #define E6_CURRENT      640
     #define E6_MICROSTEPS   E0_MICROSTEPS
     #define E6_RSENSE         0.11
     #define E6_CHAIN_POS     -1
@@ -2852,7 +2856,7 @@
   #endif
 
   #if AXIS_IS_TMC(E7)
-    #define E7_CURRENT      800
+    #define E7_CURRENT      640
     #define E7_MICROSTEPS   E0_MICROSTEPS
     #define E7_RSENSE         0.11
     #define E7_CHAIN_POS     -1
@@ -2906,25 +2910,25 @@
    * Set *_SERIAL_TX_PIN and *_SERIAL_RX_PIN to match for all drivers
    * on the same serial port, either here or in your board's pins file.
    */
-  //#define  X_SLAVE_ADDRESS 0
-  //#define  Y_SLAVE_ADDRESS 0
-  //#define  Z_SLAVE_ADDRESS 0
-  //#define X2_SLAVE_ADDRESS 0
-  //#define Y2_SLAVE_ADDRESS 0
-  //#define Z2_SLAVE_ADDRESS 0
-  //#define Z3_SLAVE_ADDRESS 0
-  //#define Z4_SLAVE_ADDRESS 0
-  //#define  I_SLAVE_ADDRESS 0
-  //#define  J_SLAVE_ADDRESS 0
-  //#define  K_SLAVE_ADDRESS 0
-  //#define E0_SLAVE_ADDRESS 0
-  //#define E1_SLAVE_ADDRESS 0
-  //#define E2_SLAVE_ADDRESS 0
-  //#define E3_SLAVE_ADDRESS 0
-  //#define E4_SLAVE_ADDRESS 0
-  //#define E5_SLAVE_ADDRESS 0
-  //#define E6_SLAVE_ADDRESS 0
-  //#define E7_SLAVE_ADDRESS 0
+  #define  X_SLAVE_ADDRESS 0
+  #define  Y_SLAVE_ADDRESS 0
+  #define  Z_SLAVE_ADDRESS 0
+  #define X2_SLAVE_ADDRESS 0
+  #define Y2_SLAVE_ADDRESS 0
+  #define Z2_SLAVE_ADDRESS 0
+  #define Z3_SLAVE_ADDRESS 0
+  #define Z4_SLAVE_ADDRESS 0
+  #define  I_SLAVE_ADDRESS 0
+  #define  J_SLAVE_ADDRESS 0
+  #define  K_SLAVE_ADDRESS 0
+  #define E0_SLAVE_ADDRESS 0
+  #define E1_SLAVE_ADDRESS 0
+  #define E2_SLAVE_ADDRESS 0
+  #define E3_SLAVE_ADDRESS 0
+  #define E4_SLAVE_ADDRESS 0
+  #define E5_SLAVE_ADDRESS 0
+  #define E6_SLAVE_ADDRESS 0
+  #define E7_SLAVE_ADDRESS 0
 
   /**
    * Software enable
@@ -2961,7 +2965,7 @@
    * Define your own with:
    * { <off_time[1..15]>, <hysteresis_end[-3..12]>, hysteresis_start[1..8] }
    */
-  #define CHOPPER_TIMING CHOPPER_DEFAULT_12V        // All axes (override below)
+  #define CHOPPER_TIMING CHOPPER_DEFAULT_24V        // All axes (override below)
   //#define CHOPPER_TIMING_X  CHOPPER_TIMING        // For X Axes (override below)
   //#define CHOPPER_TIMING_X2 CHOPPER_TIMING_X
   //#define CHOPPER_TIMING_Y  CHOPPER_TIMING        // For Y Axes (override below)
@@ -3059,9 +3063,9 @@
 
   #if EITHER(SENSORLESS_HOMING, SENSORLESS_PROBING)
     // TMC2209: 0...255. TMC2130: -64...63
-    #define X_STALL_SENSITIVITY  8
+    #define X_STALL_SENSITIVITY  75
     #define X2_STALL_SENSITIVITY X_STALL_SENSITIVITY
-    #define Y_STALL_SENSITIVITY  8
+    #define Y_STALL_SENSITIVITY  75
     #define Y2_STALL_SENSITIVITY Y_STALL_SENSITIVITY
     //#define Z_STALL_SENSITIVITY  8
     //#define Z2_STALL_SENSITIVITY Z_STALL_SENSITIVITY
@@ -3071,7 +3075,7 @@
     //#define J_STALL_SENSITIVITY  8
     //#define K_STALL_SENSITIVITY  8
     //#define SPI_ENDSTOPS              // TMC2130 only
-    //#define IMPROVE_HOMING_RELIABILITY
+    #define IMPROVE_HOMING_RELIABILITY
   #endif
 
   /**
@@ -3090,7 +3094,7 @@
    * Beta feature!
    * Create a 50/50 square wave step pulse optimal for stepper drivers.
    */
-  //#define SQUARE_WAVE_STEPPING
+  #define SQUARE_WAVE_STEPPING
 
   /**
    * Enable M122 debugging command for TMC stepper drivers.
