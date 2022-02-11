@@ -95,6 +95,8 @@
 // @section machine
 
 // Choose the name from boards.h that matches your setup
+//
+#define MOTHERBOARD BOARD_BTT_SKR_E3_TURBO
 #ifndef MOTHERBOARD
   #define MOTHERBOARD BOARD_RAMPS_14_EFB
 #endif
@@ -120,7 +122,7 @@
  *
  * :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000]
  */
-#define BAUDRATE 250000
+//#define BAUDRATE 250000
 //#define BAUD_RATE_GCODE     // Enable G-code M575 to set the baud rate
 
 /**
@@ -143,7 +145,6 @@
 // Enable the Bluetooth serial interface on AT90USB devices
 //#define BLUETOOTH
 
-  #define MOTHERBOARD BOARD_BTT_SKR_E3_TURBO
 // Name displayed in the LCD "Ready" message and Info menu
 #define CUSTOM_MACHINE_NAME "Pedros 3D printer"
 
